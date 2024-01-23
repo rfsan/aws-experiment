@@ -14,6 +14,7 @@ jobs:
     env:
       AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      BUCKET: ${{ secrets.BUCKET }}
       AWS_ROLE: "github-aws-experiment-role"
       
     steps:
@@ -24,4 +25,5 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE }}
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
-    - run: aws s3 ls
+    - run: echo "Hello" > hello.txt    
+    - run: aws s3 cp hello.txt s3://${{ env.BUCKET }}/hello.txt
